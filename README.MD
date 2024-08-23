@@ -29,14 +29,53 @@ You should obtain running the problem an output close to
 ### Step 3 :
 Comments about the code ...
 How to refactor the code 
+Write a function taking a list as a parameter and 2 functions doing:
+* mapping the input to another list with the mappingFunction provided as parameter
+* filtering the list with the filteredFunction parameter
+* display the 3 lists
 
-### Step 4 : 
-What happens if you wish to write even more generic functions enabling to use
-* add (x,y) -> x+y , x,y as double
-* and so on
+Try to have  a weak complexity score.
 
+#### Step 3.1
+
+What is the signature of the mapping function  ?
+How to translate this with VAVR functions
+
+#### Step 3.2
+What is the signature of the filtering function?
+
+#### Step 3.3
+You can now write the mapFilterAndDisplay() function...
+What is the complexity of the method ?
+
+#### Step 3.4
+One last refactor to have a weak complexity score
 
 ## Kata solutions
 
 Please checkout the git tag with the name of the step.
+
+
+## Conclusion
+You have seen :
+* how to create an HoF function
+* this HoF uses Java generics so very open
+* how powerful it is
+* how your code complexity is raised down
+
+
+## What about about a generic version of add ?
+
+We may try to write  something like
+
+static <T> T add (T x,T y){
+  return x+y;
+}
+
+This function would admit only numbers.
+Java provides an abstraction for numbers as objects with Number.
+Unfortunately this abstraction is useless and just offers ways to unwrap 
+primitive types. So coding this generic function would be awful & akward.
+
+
 

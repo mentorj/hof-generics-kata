@@ -1,54 +1,38 @@
+import io.vavr.Function1;
 import io.vavr.collection.List;
 
 public class Kata {
 
-    public static int add(int x, int y){
-        return x+y;
-    }
+    private static Function1<Integer,Integer> multiplyBy2Plus1 = Function1.of((Integer integer) -> integer*2 + 1);
 
-    public static int multiply(int x,int y){
-        return x*y;
-    }
+    private static Function1<Integer,Boolean> isDividableBy3 = Function1.of((Integer i) ->i%3 == 0 );
+    private static Function1<Double,Boolean> isDividableBy3Double = Function1.of((Double d) ->Math.floorDiv(d.intValue(),3) == 0 );
 
-    public static int substract(int x, int y){
-        return x-y;
-    }
+    private static Function1<Integer,Integer> substract2 = Function1.of((Integer integer) -> integer -2 );
 
-    public static double add(double x, double y){
-        return x+y;
-    }
+    private static Function1<Double,Boolean> isEven = Function1.of((Double i) -> Math.floorDiv(i.intValue(),2)== 0);
 
-    public static double multiply(double x,double y){
-        return x*y;
-    }
+    private static Function1<Double,Double> multiplyBy2PlusOneDouble = Function1.of((Double x) -> x*2 + 1);
 
-    public static double substract(double x, double y){
-        return x-y;
+    private static  <T extends Number> void filterMapAndDisplay(List<T> numbersList, Function1<T,Boolean> filterFunction,Function1<T,T> mappingFunction){
+        List<T> mappedList = numbersList.map(t -> mappingFunction.apply(t));
+        List<T> filteredList = mappedList.filter( t-> filterFunction.apply(t) );
+        numbersList.filter(t -> filterFunction.apply(t));
+        System.out.println("Original list = "+ numbersList);
+        System.out.println("Mapped list =  " + mappedList);
+        System.out.println("Filtered list = " + filteredList);
+
     }
 
 
     public static void main(String[] args) {
         List<Integer> myList = List.of(1,2,3,4,5);
-        List<Integer> mappedList = myList.map(integer -> {return add(integer,2);});
-        List<Integer> filteredList = mappedList.filter(integer -> integer%2==0);
-
-        System.out.println("Original list : " + myList);
-        System.out.println("Mapped list :  "+ mappedList);
-        System.out.println("Filtered list : "+ filteredList);
-
-        List<Integer> mappedList2 = myList.map(integer -> {return substract(integer,2);});
-        List<Integer> filteredList2 = mappedList2.filter(integer -> integer%2==0);
-        System.out.println("Original list : " + myList);
-        System.out.println("Mapped list :  "+ mappedList2);
-        System.out.println("Filtered list : "+ filteredList2);
+        filterMapAndDisplay(myList,isDividableBy3,multiplyBy2Plus1 );
+        filterMapAndDisplay(myList,isDividableBy3, substract2);
 
         List<Double>  myDoubleList = List.of(1.0,2.0,3.0,4.0);
-        List<Double> doubleListMapped = myDoubleList.map(x ->x*2);
-        List<Double> doubleListFiltered = doubleListMapped.filter(x -> x>5);
-        System.out.println("Original list : " + myDoubleList);
-        System.out.println("Mapped list :  "+ doubleListMapped);
-        System.out.println("Filtered list : "+ doubleListFiltered);
-
+        filterMapAndDisplay(myDoubleList,isDividableBy3Double,multiplyBy2PlusOneDouble );
+        filterMapAndDisplay(myDoubleList,isDividableBy3Double,Function1.of((Double x) -> x -2 ) );
 
     }
 }
