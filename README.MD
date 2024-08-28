@@ -77,5 +77,11 @@ Java provides an abstraction for numbers as objects with Number.
 Unfortunately this abstraction is useless and just offers ways to unwrap 
 primitive types. So coding this generic function would be awful & akward.
 
+We may try somethinbg like this but it does not compile
+
+static <T extends Number> add (T x,T y){
+   return x+y; // does not compile because + is defined as an operator in Java not a function
+}
+
 
 
